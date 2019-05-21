@@ -2,17 +2,22 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"sync"
 )
 
 type Config struct {
-    Port int
+	Port int
+	Context string
 }
 
-func (c Config) getPort() string {
+func (c Config) GetPort() string {
 	return fmt.Sprintf(":%d",c.Port)
 }
 
+func (c Config) GetContext() string {
+	return fmt.Sprintf("/%s",c.Context)
+}
 
 
 var (
@@ -23,8 +28,8 @@ var (
 
 func GetConfig() *Config {
     once.Do(func() {
-		port = port + 1
-		configInstance = &Config{Port: port}
+		context := os.Getenv("SERVER_CONTEXT")
+		configInstance = &Config{Port: port, Context: context}
     })
 
 	return configInstance
