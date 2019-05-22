@@ -2,7 +2,9 @@ package net_test
 
 import (
 	"testing"
+	
 	"github.com/andersonlira/go-mockcreator/net"
+	"github.com/andersonlira/goutils/str"
 )
 
 var (
@@ -70,4 +72,19 @@ func TestExtractXmlMethodName(t *testing.T) {
 	}
 
 	
+}
+
+func TestExtractXmlBody(t *testing.T){
+	extractedBodyA := net.ExtractXmlBody(xmlA)
+
+	if str.Compact(bodyA) != str.Compact(extractedBodyA) {
+		t.Errorf("Body should be %s but %s",bodyA,extractedBodyA)
+	}
+
+	extractedBodyB := net.ExtractXmlBody(xmlB)
+
+	if str.Compact(bodyB) != str.Compact(extractedBodyB) {
+		t.Errorf("Body should be %s but %s",bodyB, extractedBodyB)
+	}
+
 }

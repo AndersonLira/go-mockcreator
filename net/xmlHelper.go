@@ -20,6 +20,11 @@ func ExtractXmlMethodName(xml string) string {
 	return "MethodUnknown"
 }
 
-func ExtractBody(xml string) string {
-	panic("Not implemented yet")
+func ExtractXmlBody(xml string) string {
+	regex := *regexp.MustCompile(`(?s)<.*Body>(.*)</[a-zA-Z0-9]+:Body>`)
+    res := regex.FindAllStringSubmatch(xml, -1)
+	if len(res) > 0 {
+		return res[0][1]
+	}
+	return xml
 }
