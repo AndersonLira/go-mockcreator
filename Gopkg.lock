@@ -3,15 +3,44 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:367987accf2bc81d8014bed7069fabc2c903474f00cc51c1d3975463b936291b"
+  digest = "1:bd831ea3b7c0c8135807891e6ce399334499e01fc18e2e0f3193330ca7c31fef"
   name = "github.com/andersonlira/goutils"
-  packages = ["io"]
+  packages = [
+    "io",
+    "str",
+  ]
   pruneopts = "UT"
   revision = "72e54fc4b33c37b8d3c4bc06c40083b009facf5e"
+
+[[projects]]
+  branch = "master"
+  digest = "1:85ceb7046447e3f5cf21c621ec137b23eb8d02ae9b585dd5c22d65543a0f3020"
+  name = "github.com/xrash/smetrics"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a3153f7040e90324c58c6287535e26a0ac5c1cc1"
+
+[[projects]]
+  digest = "1:1093f2eb4b344996604f7d8b29a16c5b22ab9e1b25652140d3fede39f640d5cd"
+  name = "golang.org/x/text"
+  packages = [
+    "internal/gen",
+    "internal/triegen",
+    "internal/ucd",
+    "transform",
+    "unicode/cldr",
+    "unicode/norm",
+  ]
+  pruneopts = "UT"
+  revision = "342b2e1fbaa52c93f31447ad2c6abc048c63e475"
+  version = "v0.3.2"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/andersonlira/goutils/io"]
+  input-imports = [
+    "github.com/andersonlira/goutils/io",
+    "github.com/andersonlira/goutils/str",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -1,14 +1,16 @@
-package main
+package config_test
 
 import (
 	"sync"
 	"testing"
+
+	"github.com/andersonlira/go-mockcreator/config"
 )
 
 func TestConfigSingleton(t *testing.T){
 	wg := sync.WaitGroup{}
-	ca := GetConfig()
-	cb := GetConfig()
+	ca := config.GetConfig()
+	cb := config.GetConfig()
 
 	if ca  != cb {
 		t.Errorf("Objects should be same but %p and %p", ca, cb)
@@ -16,12 +18,12 @@ func TestConfigSingleton(t *testing.T){
 
 	size := 100
 	wg.Add(size)
-	many := make([]*Config, size)
+	many := make([]*config.Config, size)
 
 	for i := 0; i < size ;i++ {
 		go func(index int) {
 			defer wg.Done()
-			many[index] = GetConfig()
+			many[index] = config.GetConfig()
 		}(i)
 	}
 

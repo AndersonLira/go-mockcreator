@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"fmt"
@@ -9,6 +9,7 @@ import (
 type Config struct {
 	Port int
 	Context string
+	URL string
 }
 
 func (c Config) GetPort() string {
@@ -19,7 +20,6 @@ func (c Config) GetContext() string {
 	return fmt.Sprintf("/%s",c.Context)
 }
 
-
 var (
 	configInstance *Config
 	once sync.Once
@@ -29,7 +29,11 @@ var (
 func GetConfig() *Config {
     once.Do(func() {
 		context := os.Getenv("SERVER_CONTEXT")
-		configInstance = &Config{Port: port, Context: context}
+		url := os.Getenv("SERVICE_URL")
+		if url == "" {
+			panic("Error. SERVICE_URL environment variable is not setted")
+		}
+		configInstance = &Config{Port: port, Context: context, URL: url}
     })
 
 	return configInstance
