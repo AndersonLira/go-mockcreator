@@ -13,7 +13,7 @@ import (
 
 )
 
-func Wsdl(xmlRequest string) {
+func Wsdl(xmlRequest string) string{
 	// wsdl service url
 	cfg := config.GetConfig()
 	url := fmt.Sprintf("%s",
@@ -38,7 +38,7 @@ func Wsdl(xmlRequest string) {
 	req, err := http.NewRequest(httpMethod, url, bytes.NewReader(payload))
 	if err != nil {
 		log.Fatal("Error on creating request object. ", err.Error())
-		return
+		return ""
 	}
 
 	// set the content type header, as well as the oter required headers
@@ -61,10 +61,10 @@ func Wsdl(xmlRequest string) {
 	res, err := client.Do(req)
 	if err != nil {
 		log.Fatal("Error on dispatching request. ", err.Error())
-		return
+		return ""
 	}
 
 	responseData, _ := ioutil.ReadAll(res.Body)
 	responseText := string(responseData)
-	fmt.Printf("%s",responseText)
+	return responseText
 }
