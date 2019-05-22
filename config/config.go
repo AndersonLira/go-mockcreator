@@ -10,6 +10,8 @@ type Config struct {
 	Port int
 	Context string
 	URL string
+	User string
+	Password string
 }
 
 func (c Config) GetPort() string {
@@ -28,12 +30,22 @@ var (
 
 func GetConfig() *Config {
     once.Do(func() {
-		context := os.Getenv("SERVER_CONTEXT")
-		url := os.Getenv("SERVICE_URL")
-		if url == "" {
-			panic("Error. SERVICE_URL environment variable is not setted")
-		}
-		configInstance = &Config{Port: port, Context: context, URL: url}
+			context := os.Getenv("SERVER_CONTEXT")
+			url := os.Getenv("SERVICE_URL")
+
+			user := os.Getenv("MC_USER")
+			pass := os.Getenv("MC_PASS")
+			if url == "" || user == "" || pass == "" {
+				panic("Error. SERVICE_URL or MC_USER or MC_PASS environment variable is not setted")
+			}
+
+			configInstance = &Config{
+				Port: port, 
+				Context: context, 
+				URL: url,
+				User: user,
+				Password: pass,
+			}
     })
 
 	return configInstance
