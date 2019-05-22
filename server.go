@@ -3,12 +3,16 @@ package main
 import (
     "fmt"
     "net/http"
+
+    "github.com/andersonlira/goutils/io"
+
 )
 
 
 
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
+    content, _ := io.ReadFile("D:\\programs\\mockcreator\\payloads\\geBillingInfoStatic.xml")
+    fmt.Fprint(w, content)
 }
 
