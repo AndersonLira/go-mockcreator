@@ -1,12 +1,14 @@
-package main
+package chain_test
 
 import (
 	"testing"
 	"errors"
+
+	"github.com/andersonlira/go-mockcreator/chain"
 )
 
 type ExecutorA struct{
-	Next Executor
+	Next chain.Executor
 }
 
 func (self *ExecutorA) Get(xml string) (string,error) {
@@ -16,13 +18,13 @@ func (self *ExecutorA) Get(xml string) (string,error) {
 	return "A", errors.New("A error")
 }
 
-func (self *ExecutorA) GetNext() Executor{
+func (self *ExecutorA) GetNext() chain.Executor{
 	return self.Next
 }
 
 
 type ExecutorB struct{
-	Next Executor
+	Next chain.Executor
 }
 
 func (self ExecutorB) Get(xml string) (string,error) {
@@ -32,12 +34,12 @@ func (self ExecutorB) Get(xml string) (string,error) {
 	return "B", errors.New("B error")
 }
 
-func (self *ExecutorB) GetNext() Executor{
+func (self *ExecutorB) GetNext() chain.Executor{
 	return self.Next
 }
 
 type ExecutorC struct{
-	Next Executor
+	Next chain.Executor
 }
 
 func (self ExecutorC) Get(xml string) (string,error) {
@@ -47,7 +49,7 @@ func (self ExecutorC) Get(xml string) (string,error) {
 	return "C", errors.New("C error")
 }
 
-func (self *ExecutorC) GetNext() Executor{
+func (self *ExecutorC) GetNext() chain.Executor{
 	return self.Next
 }
 
