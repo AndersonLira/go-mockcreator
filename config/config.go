@@ -12,6 +12,7 @@ type Config struct {
 	URL string
 	User string
 	Password string
+	PayloadFolder string
 }
 
 func (c Config) GetPort() string {
@@ -39,12 +40,19 @@ func GetConfig() *Config {
 				panic("Error. SERVICE_URL or MC_USER or MC_PASS environment variable is not setted")
 			}
 
+			pf := os.Getenv("MC_PAYLOAD_FOLDER")
+
+			if pf == "" {
+				pf = "payloads/"
+			}
+
 			configInstance = &Config{
 				Port: port, 
 				Context: context, 
 				URL: url,
 				User: user,
 				Password: pass,
+				PayloadFolder: pf,
 			}
     })
 
