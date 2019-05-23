@@ -1,7 +1,10 @@
-package net
+package xml
 
 import (
+	"fmt"
 	"regexp"
+
+	"github.com/andersonlira/goutils/str"
 )
 
 //ExtractXmlMethodName return method name from a xml string. 
@@ -20,6 +23,7 @@ func ExtractXmlMethodName(xml string) string {
 	return "MethodUnknown"
 }
 
+//ExtractXmlBody return body content from giving xml
 func ExtractXmlBody(xml string) string {
 	regex := *regexp.MustCompile(`(?s)<.*Body>(.*)</[a-zA-Z0-9]+:Body>`)
     res := regex.FindAllStringSubmatch(xml, -1)
@@ -27,4 +31,8 @@ func ExtractXmlBody(xml string) string {
 		return res[0][1]
 	}
 	return xml
+}
+
+func NameSugested(xml string) string {
+	return fmt.Sprintf("%s%d.xml",ExtractXmlMethodName(xml),str.Hash(ExtractXmlBody(xml)))
 }

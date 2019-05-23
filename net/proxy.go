@@ -11,6 +11,7 @@ import (
 
 	"github.com/andersonlira/go-mockcreator/chain"
 	"github.com/andersonlira/go-mockcreator/config"
+	"github.com/andersonlira/go-mockcreator/xml"
 
 )
 
@@ -43,7 +44,7 @@ func wsdl(xmlRequest string) (string,error){
 	httpMethod := "POST"
 
 	// soap action
-	soapAction := ExtractXmlMethodName(xmlRequest)
+	soapAction := xml.ExtractXmlMethodName(xmlRequest)
 
 	// authorization credentials
 	username := cfg.User

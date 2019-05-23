@@ -3,11 +3,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:646d6e0c8a198460d19e37e5303c42dfb63618831296a587956e9efba333696b"
+  digest = "1:6221738243199a8bea3cf1a25118f8f0a317ab6c7188811b68f45416ee3941a2"
   name = "github.com/andersonlira/goutils"
-  packages = ["str"]
+  packages = [
+    "io",
+    "str",
+  ]
   pruneopts = "UT"
-  revision = "72e54fc4b33c37b8d3c4bc06c40083b009facf5e"
+  revision = "f9a50c7d926d740cc8073e36261035c73f76af3b"
 
 [[projects]]
   branch = "master"
@@ -35,6 +38,9 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/andersonlira/goutils/str"]
+  input-imports = [
+    "github.com/andersonlira/goutils/io",
+    "github.com/andersonlira/goutils/str",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

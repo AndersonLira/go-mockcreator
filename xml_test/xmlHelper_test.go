@@ -1,9 +1,9 @@
-package net_test
+package xml_test
 
 import (
 	"testing"
 	
-	"github.com/andersonlira/go-mockcreator/net"
+	"github.com/andersonlira/go-mockcreator/xml"
 	"github.com/andersonlira/goutils/str"
 )
 
@@ -56,7 +56,7 @@ var (
 
 func TestExtractXmlMethodName(t *testing.T) {
 	expectedName := "getUser"
-	methodName := net.ExtractXmlMethodName(xmlA)
+	methodName := xml.ExtractXmlMethodName(xmlA)
 
 	if expectedName != methodName {
 		t.Errorf("Method name should be %s but %s",expectedName,methodName)
@@ -65,7 +65,7 @@ func TestExtractXmlMethodName(t *testing.T) {
 
 	
 	expectedName = "getAccountsResponse"
-	methodName = net.ExtractXmlMethodName(xmlB)
+	methodName = xml.ExtractXmlMethodName(xmlB)
 
 	if expectedName != methodName {
 		t.Errorf("Method name should be %s but %s",expectedName,methodName)
@@ -75,16 +75,27 @@ func TestExtractXmlMethodName(t *testing.T) {
 }
 
 func TestExtractXmlBody(t *testing.T){
-	extractedBodyA := net.ExtractXmlBody(xmlA)
+	extractedBodyA := xml.ExtractXmlBody(xmlA)
 
 	if str.Compact(bodyA) != str.Compact(extractedBodyA) {
 		t.Errorf("Body should be %s but %s",bodyA,extractedBodyA)
 	}
 
-	extractedBodyB := net.ExtractXmlBody(xmlB)
+	extractedBodyB := xml.ExtractXmlBody(xmlB)
 
 	if str.Compact(bodyB) != str.Compact(extractedBodyB) {
 		t.Errorf("Body should be %s but %s",bodyB, extractedBodyB)
+	}
+
+}
+
+func TestNameSugested(t *testing.T){
+	sugestion := xml.NameSugested(xmlA)
+	expectedName := "getUser4029099683.xml"
+
+
+	if sugestion != expectedName {
+		t.Errorf("Name should be %s but %s",expectedName, sugestion)
 	}
 
 }
