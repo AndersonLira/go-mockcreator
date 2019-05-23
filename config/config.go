@@ -2,17 +2,23 @@ package config
 
 import (
 	"fmt"
+	"encoding/json"
 	"os"
 	"sync"
+
+	"github.com/andersonlira/goutils/io"
 )
 
 type Config struct {
-	Port int
+	Port int `json:"port"`
 	Context string
 	URL string
 	User string
 	Password string
 	PayloadFolder string
+
+	ReturnDelay int `json:"returnDelay"`
+
 }
 
 func (c Config) GetPort() string {
@@ -26,7 +32,7 @@ func (c Config) GetContext() string {
 var (
 	configInstance *Config
 	once sync.Once
-	port int = 8088
+	defaultPort int = 8088
 )
 
 func GetConfig() *Config {
@@ -47,15 +53,21 @@ func GetConfig() *Config {
 			}
 
 			configInstance = &Config{
-				Port: port, 
+				Port: defaultPort, 
 				Context: context, 
 				URL: url,
 				User: user,
 				Password: pass,
 				PayloadFolder: pf,
 			}
+			readFileConf(configInstance)
     })
 
 	return configInstance
+}
+
+func readFileConf(cfg *Config){
+	s,_ := io.ReadFile("config.json")
+    json.Unmarshal([]byte(s), cfg)
 }
 

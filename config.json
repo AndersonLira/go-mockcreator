@@ -1,0 +1,41 @@
+{
+	"returnDelay":777,
+	"delayMethods":[
+			"selectPorfolioItem"
+	],
+	"showErrorServer": true,
+	"workingAsProxy": false,
+	"clearCache":{
+		"createDelegation": [
+			"getDelegationGroupsSummary",
+			"getDelegationGroupSummary",
+			"getDelegatedItemsFromDelegationGroup",
+			"existDelegation"
+		],
+		"removeDelegation": [
+			"getDelegationGroupsSummary",
+			"getDelegationGroupSummary",
+			"getDelegatedItemsFromDelegationGroup",
+			"existDelegation"
+		],
+		"updateDelegationGroup": [
+			"getDelegationGroupsSummary",
+			"getDelegationGroupSummary",
+			"getDelegatedItemsFromDelegationGroup",
+			"existDelegation"
+		]
+	},
+	"cacheEvict":[
+		"createDelegation",
+		"removeDelegation",
+		"updateDelegationGroup",
+		"updateDelegatedItemsFromDelegationGroup"
+	],
+	"staticReturn": {
+		"soapMethodNameBodyKey": "payloads/specific_request_response.xml",
+		"soapMethodName": "payloads/generic_request_response.xml",
+		"getBillingInfo":"payloads/geBillingInfoStatic.xml"
+
+	},
+	"port": 8088
+}
