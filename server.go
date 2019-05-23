@@ -1,7 +1,8 @@
 package main
 
 import (
-    "fmt"
+	"fmt"
+	"io/ioutil"
     "net/http"
 
 	"github.com/andersonlira/go-mockcreator/net"
@@ -12,15 +13,9 @@ import (
 
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
-    content 	:= net.Wsdl(`
-	<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:prl="http://www.abcdefghhijkmln.pt/">
-		<soapenv:Header/>
-		<soapenv:Body>
-		<prl:getUser>
-			<identifier>contato@andersonlira.com</identifier>
-		</prl:getUser>
-		</soapenv:Body>
-	</soapenv:Envelope>`)
+	reqData, _ := ioutil.ReadAll(r.Body)
+	reqText := string(reqData)
+    content 	:= net.Wsdl(reqText)
     fmt.Fprint(w, content)
 }
 
