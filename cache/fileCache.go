@@ -1,6 +1,8 @@
 package cache
 
 import (
+	"log"
+	
 	"github.com/andersonlira/go-mockcreator/chain"
 	"github.com/andersonlira/go-mockcreator/config"
 	"github.com/andersonlira/go-mockcreator/xml"
@@ -23,6 +25,9 @@ func (self FileCacheExecutor) Get(xmlS string) (string,error) {
 		if err == nil {
 			writeNewContent(fileName,content)
 		}
+	}else{
+		log.Printf("Read from file: %s",fileName)
+
 	}
 	return content, err
 }

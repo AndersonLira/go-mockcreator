@@ -12,6 +12,7 @@ import (
 	"github.com/andersonlira/go-mockcreator/chain"
 	"github.com/andersonlira/go-mockcreator/config"
 	"github.com/andersonlira/go-mockcreator/xml"
+	"github.com/andersonlira/goutils/ft"
 
 )
 
@@ -19,11 +20,14 @@ type WsdlExecutor struct {
 	Next chain.Executor
 }
 
-func (self WsdlExecutor) Get(xml string) (string,error) {
+func (self WsdlExecutor) Get(xmlS string) (string,error) {
+	fileName := xml.ExtractXmlMethodName(xmlS)
 	if self.GetNext() != nil {
-		return self.GetNext().Get(xml)
+		return self.GetNext().Get(xmlS)
+	}else{
+		log.Printf("%sRead from cache: %s%s",ft.YELLOW,fileName,ft.NONE)
 	}
-	return wsdl(xml)
+	return wsdl(xmlS)
 }
 
 func (self *WsdlExecutor) GetNext() chain.Executor{
@@ -50,7 +54,6 @@ func wsdl(xmlRequest string) (string,error){
 	username := cfg.User
 	password := cfg.Password
 
-	log.Println("-> Preparing the request")
 
 	// prepare the request
 	req, err := http.NewRequest(httpMethod, url, bytes.NewReader(payload))
@@ -73,7 +76,6 @@ func wsdl(xmlRequest string) (string,error){
 		},
 	}
 
-	log.Println("-> Dispatching the request")
 
 	// dispatch the request
 	res, err := client.Do(req)
