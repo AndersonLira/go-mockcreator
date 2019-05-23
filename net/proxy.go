@@ -9,11 +9,28 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/andersonlira/go-mockcreator/chain"
 	"github.com/andersonlira/go-mockcreator/config"
 
 )
 
-func Wsdl(xmlRequest string) string{
+type WsdlExecutor struct {
+	Next chain.Executor
+}
+
+func (self WsdlExecutor) Get(xml string) (string,error) {
+	if self.GetNext() != nil {
+		return self.GetNext().Get(xml)
+	}
+	return wsdl(xml)
+}
+
+func (self *WsdlExecutor) GetNext() chain.Executor{
+	return self.Next
+}
+
+
+func wsdl(xmlRequest string) (string,error){
 	// wsdl service url
 	cfg := config.GetConfig()
 	url := fmt.Sprintf("%s",
@@ -38,7 +55,7 @@ func Wsdl(xmlRequest string) string{
 	req, err := http.NewRequest(httpMethod, url, bytes.NewReader(payload))
 	if err != nil {
 		log.Fatal("Error on creating request object. ", err.Error())
-		return ""
+		return "", err
 	}
 
 	// set the content type header, as well as the oter required headers
@@ -61,10 +78,10 @@ func Wsdl(xmlRequest string) string{
 	res, err := client.Do(req)
 	if err != nil {
 		log.Fatal("Error on dispatching request. ", err.Error())
-		return ""
+		return "",err
 	}
 
 	responseData, _ := ioutil.ReadAll(res.Body)
 	responseText := string(responseData)
-	return responseText
+	return responseText,nil
 }

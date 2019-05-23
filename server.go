@@ -10,12 +10,12 @@ import (
 )
 
 
-
+var executor = net.WsdlExecutor{}
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
 	reqData, _ := ioutil.ReadAll(r.Body)
 	reqText := string(reqData)
-    content 	:= net.Wsdl(reqText)
+    content, _ := executor.Get(reqText)
     fmt.Fprint(w, content)
 }
 
