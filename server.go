@@ -10,14 +10,16 @@ import (
 
 )
 
+var memExecutor = cache.MemoryCacheExecutor{}
 var fileExecutor = cache.FileCacheExecutor{}
 var wsdlExecutor = net.WsdlExecutor{}
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
 	reqData, _ := ioutil.ReadAll(r.Body)
 	reqText := string(reqData)
+	memExecutor.Next = &fileExecutor
 	fileExecutor.Next = &wsdlExecutor
-    content, _ := fileExecutor.Get(reqText)
+    content, _ := memExecutor.Get(reqText)
     fmt.Fprint(w, content)
 }
 

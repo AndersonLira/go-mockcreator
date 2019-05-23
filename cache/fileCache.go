@@ -7,13 +7,14 @@ import (
 	"github.com/andersonlira/goutils/io"
 )
 
-var cfg = config.GetConfig()
 
 type FileCacheExecutor struct {
 	Next chain.Executor
 }
 
 func (self FileCacheExecutor) Get(xmlS string) (string,error) {
+	cfg := config.GetConfig()
+
 	fileName := cfg.PayloadFolder + "/" + xml.NameSugested(xmlS)
 
 	content ,err  := io.ReadFile(fileName)
