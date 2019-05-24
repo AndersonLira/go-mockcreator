@@ -34,7 +34,6 @@
 	"staticReturn": {
 		"soapMethodNameBodyKey": "payloads/specific_request_response.xml",
 		"soapMethodName": "payloads/generic_request_response.xml",
-		"getBillingInfo":"payloads/geBillingInfoStatic.xml"
 	},
 	"port": 8088
 }

@@ -84,7 +84,7 @@ func TestStaticReturn(t *testing.T){
 		t.Errorf("aaad should have aaa_static value, but %s",v )
 	}
 
-	if v,ok := cfg.IsStaticReturn("cccccc"); !ok  || v != "c_static"  {
+	if v,ok := cfg.IsStaticReturn("cccccc.xml"); !ok  || v != "c_static"  {
 		t.Errorf("cccccc should have c_static value, but %s",v )
 	}
 

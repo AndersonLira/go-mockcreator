@@ -22,21 +22,28 @@ var payloadFolder = config.GetConfig().PayloadFolder + "/"
 
 func (self FileCacheExecutor) Get(xmlS string) (string,error) {
 
-	fileName := payloadFolder + xml.NameSugested(xmlS)
 	methodName := xml.ExtractXmlMethodName(xmlS)
+	fileName := xml.NameSugested(xmlS)
+	pathName := payloadFolder + fileName
+	
+	if fileStatic, ok :=config.GetConfig().IsStaticReturn(fileName); ok {
+		pathName = fileStatic
+		log.Printf("Read from file ..:::STATIC:::.. ...:::FILE:::... %s",pathName)
+	}
 
 	if config.GetConfig().IsCacheEvict(methodName) {
 		return self.GetNext().Get(xmlS)
 	}
 
-	content ,err  := io.ReadFile(fileName)
+
+	content ,err  := io.ReadFile(pathName)
 	if err != nil || content == "" {
 		content, err = self.GetNext().Get(xmlS)
 		if err == nil {
-			writeNewContent(fileName,content)
+			writeNewContent(pathName,content)
 		}
 	}else{
-		log.Printf("Read from file: %s",fileName)
+		log.Printf("Read from file: %s",pathName)
 	}
 
 	manageFileCache(methodName)
@@ -47,8 +54,8 @@ func (self *FileCacheExecutor) GetNext() chain.Executor{
 	return self.Next
 }
 
-func writeNewContent(fileName,content string){
-	io.WriteFile(fileName,content)
+func writeNewContent(pathName,content string){
+	io.WriteFile(pathName,content)
 }
 
 func manageFileCache(methodName string){
