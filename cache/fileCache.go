@@ -25,6 +25,10 @@ func (self FileCacheExecutor) Get(xmlS string) (string,error) {
 	fileName := payloadFolder + xml.NameSugested(xmlS)
 	methodName := xml.ExtractXmlMethodName(xmlS)
 
+	if config.GetConfig().IsCacheEvict(methodName) {
+		return self.GetNext().Get(xmlS)
+	}
+
 	content ,err  := io.ReadFile(fileName)
 	if err != nil || content == "" {
 		content, err = self.GetNext().Get(xmlS)
@@ -33,8 +37,8 @@ func (self FileCacheExecutor) Get(xmlS string) (string,error) {
 		}
 	}else{
 		log.Printf("Read from file: %s",fileName)
-
 	}
+
 	manageFileCache(methodName)
 	return content, err
 }

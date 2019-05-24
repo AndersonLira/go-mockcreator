@@ -49,8 +49,8 @@ func TestConfigIsCacheEvict(t *testing.T){
 	cfg := config.GetConfig()
 	cfg.CacheEvict = methods
 
-	if !cfg.IsCacheEvict("aaa")  {
-		t.Error("aaa should be cache evict, but false")
+	if !cfg.IsCacheEvict("aaa.xml")  {
+		t.Error("aaa.xml should be cache evict, but false")
 	}
 
 	if !cfg.IsCacheEvict("bbbc")  {

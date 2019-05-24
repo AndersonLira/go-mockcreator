@@ -22,6 +22,10 @@ func (self MemoryCacheExecutor) Get(xmlS string) (string,error) {
 	methodName := xml.ExtractXmlMethodName(xmlS)
 	var err error
 
+	if config.GetConfig().IsCacheEvict(fileName) {
+		return self.GetNext().Get(xmlS)
+	}
+
 	content ,ok  := memCache[fileName]
 	if !ok || content == "" {
 		content, err = self.GetNext().Get(xmlS)
