@@ -23,7 +23,10 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 	reqText := string(reqData)
 	memExecutor.Next = &fileExecutor
 	fileExecutor.Next = &wsdlExecutor
-	content, _ := memExecutor.Get(reqText)
+	content, err := memExecutor.Get(reqText)
+	if err != nil {
+		http.Error(w,content, http.StatusInternalServerError)
+	}
 	methodName := xml.ExtractXmlMethodName(reqText)
 	if cfg.ReturnDelay > 0 && cfg.IsDelayedMethod(methodName) {
 		log.Printf("%s Sleeping %d milliseconds for %s request%s",ft.GREEN,cfg.ReturnDelay,methodName,ft.NONE )

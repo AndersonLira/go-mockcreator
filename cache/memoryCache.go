@@ -20,7 +20,9 @@ func (self MemoryCacheExecutor) Get(xmlS string) (string,error) {
 	content ,ok  := memCache[fileName]
 	if !ok || content == "" {
 		content, err = self.GetNext().Get(xmlS)
-		memCache[fileName] = content
+		if err == nil {
+			memCache[fileName] = content
+		}
 	}else{
 		log.Printf("Read from cache: %s",fileName)
 

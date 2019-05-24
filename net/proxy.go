@@ -3,6 +3,7 @@ package net
 import (
 	"bytes"
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -86,5 +87,14 @@ func wsdl(xmlRequest string) (string,error){
 
 	responseData, _ := ioutil.ReadAll(res.Body)
 	responseText := string(responseData)
+
+	if res.StatusCode < 200 || res.StatusCode > 299 {
+		if cfg.ShowErrorServer {
+			log.Printf("%s%s%s",ft.MARGENT,xmlRequest,ft.NONE)
+			log.Println("^SOAP IN ---------v SOAP OUT-------")
+			log.Printf("%s%s%s",ft.MARGENT,responseText,ft.NONE)
+		}
+		return responseText, errors.New(fmt.Sprintf("Server Error status %d",res.StatusCode))
+	}
 	return responseText,nil
 }
