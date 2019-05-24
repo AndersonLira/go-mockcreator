@@ -18,6 +18,7 @@ type Config struct {
 	PayloadFolder string
 
 	ReturnDelay int `json:"returnDelay"`
+	DelayMethods []string `json:"delayMethods"`
 
 }
 
@@ -35,6 +36,7 @@ var (
 	defaultPort int = 8088
 )
 
+//GetConfig returns config for application. It is a singleton object
 func GetConfig() *Config {
     once.Do(func() {
 			context := os.Getenv("SERVER_CONTEXT")
@@ -68,6 +70,6 @@ func GetConfig() *Config {
 
 func readFileConf(cfg *Config){
 	s,_ := io.ReadFile("config.json")
-    json.Unmarshal([]byte(s), cfg)
+	json.Unmarshal([]byte(s), cfg)
 }
 
