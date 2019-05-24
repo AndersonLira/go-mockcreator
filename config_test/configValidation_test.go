@@ -27,5 +27,19 @@ func TestConfigIsDelayedMethod(t *testing.T){
 	if cfg.IsDelayedMethod("ccc")  {
 		t.Error("ccc should not be delayed, but true")
 	}
+}
 
+func TestShouldClearCache(t *testing.T){
+	methods := make(map[string][]string)
+	cfg := config.GetConfig()
+	methods["aaa"] = []string{"aaa","bbb","ddd"}
+	cfg.ClearCache = methods
+
+	if list,ok := cfg.ShouldClearCache("aaa"); !ok  || len(list) != 3  {
+		t.Errorf("aaa should have 3 items, but %v",list )
+	}
+
+	if list,ok := cfg.ShouldClearCache("bbb"); ok  || len(list) != 0 {
+		t.Errorf("bbb should not exists, but %v",list )
+	}
 }

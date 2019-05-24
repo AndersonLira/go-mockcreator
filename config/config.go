@@ -21,7 +21,7 @@ type Config struct {
 	DelayMethods []string `json:"delayMethods"`
 	ShowErrorServer bool `json:"showErrorServer"`
 	WorkAsProxy bool `json:"workingAsProxy"`
-
+	ClearCache map[string][]string `json:"clearCache"`
 }
 
 func (c Config) GetPort() string {

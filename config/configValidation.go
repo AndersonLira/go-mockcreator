@@ -13,6 +13,9 @@ func (c *Config) IsDelayedMethod(name string) bool{
 	return false;
 }
 
-
+func (c *Config) ShouldClearCache(name string ) ([]string, bool){
+	list, ok := c.ClearCache[name]
+	return list,ok
+}
 
 
