@@ -2,8 +2,12 @@ package cache
 
 import (
 	"log"
+	"strings"
+
 	"github.com/andersonlira/go-mockcreator/chain"
+	"github.com/andersonlira/go-mockcreator/config"
 	"github.com/andersonlira/go-mockcreator/xml"
+	"github.com/andersonlira/goutils/ft"
 )
 
 
@@ -15,6 +19,7 @@ type MemoryCacheExecutor struct {
 func (self MemoryCacheExecutor) Get(xmlS string) (string,error) {
 
 	fileName :=  xml.NameSugested(xmlS)
+	methodName := xml.ExtractXmlMethodName(xmlS)
 	var err error
 
 	content ,ok  := memCache[fileName]
@@ -22,6 +27,7 @@ func (self MemoryCacheExecutor) Get(xmlS string) (string,error) {
 		content, err = self.GetNext().Get(xmlS)
 		if err == nil {
 			memCache[fileName] = content
+			manageCache(methodName)
 		}
 	}else{
 		log.Printf("Read from cache: %s",fileName)
@@ -34,3 +40,15 @@ func (self *MemoryCacheExecutor) GetNext() chain.Executor{
 	return self.Next
 }
 
+func manageCache(methodName string){
+	if list, ok := config.GetConfig().ShouldClearCache(methodName); ok {
+		for _,item := range list {
+			for k := range memCache {
+				if strings.HasPrefix(k, item){
+					log.Printf("%sRemoving memory cache: %s%s",ft.BLUE,k,ft.NONE)
+					delete(memCache,k)
+				}
+			}
+		}
+	}
+}
