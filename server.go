@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/andersonlira/go-mockcreator/cache"
+	"github.com/andersonlira/go-mockcreator/chain"
 	"github.com/andersonlira/go-mockcreator/net"
 	"github.com/andersonlira/go-mockcreator/xml"
 	"github.com/andersonlira/goutils/ft"
@@ -23,7 +24,13 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 	reqText := string(reqData)
 	memExecutor.Next = &fileExecutor
 	fileExecutor.Next = &wsdlExecutor
-	content, err := memExecutor.Get(reqText)
+	var executor  chain.Executor
+	if cfg.WorkAsProxy {
+		executor = &wsdlExecutor
+	}else{
+		executor = &memExecutor
+	}
+	content, err := executor.Get(reqText)
 	if err != nil {
 		http.Error(w,content, http.StatusInternalServerError)
 	}
