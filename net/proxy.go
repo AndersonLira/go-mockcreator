@@ -25,7 +25,7 @@ func (self WsdlExecutor) Get(xmlS string) (string,error) {
 	if self.GetNext() != nil {
 		return self.GetNext().Get(xmlS)
 	}else{
-		log.Printf("%sRead from cache: %s%s",ft.YELLOW,fileName,ft.NONE)
+		log.Printf("%sRead from server: %s%s",ft.YELLOW,fileName,ft.NONE)
 	}
 	return wsdl(xmlS)
 }

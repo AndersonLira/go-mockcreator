@@ -4,10 +4,9 @@ import(
 	"strings"
 )
 
-func IsDelayedMethod(name string) bool{
-	cfg := GetConfig()
-	for _, s := range cfg.DelayMethods {
-		if strings.HasPrefix(s,name){
+func (c *Config) IsDelayedMethod(name string) bool{
+	for _, s := range c.DelayMethods {
+		if strings.HasPrefix(name, s){
 			return true
 		}
 	}

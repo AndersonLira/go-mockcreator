@@ -11,17 +11,20 @@ func TestConfigIsDelayedMethod(t *testing.T){
 	cfg := config.GetConfig()
 	cfg.DelayMethods = methods
 
-	if !config.IsDelayedMethod("aaa")  {
+	if !cfg.IsDelayedMethod("aaa")  {
 		t.Error("aaa should be delayed, but false")
 	}
 
-	if !config.IsDelayedMethod("aaa")  {
-		t.Error("aaa should be delayed, but false")
+	if !cfg.IsDelayedMethod("bbbc")  {
+		t.Error("bbbc should be delayed, but false")
+	}
+
+	if cfg.IsDelayedMethod("dd")  {
+		t.Error("dd should not be delayed, but true")
 	}
 
 
-
-	if config.IsDelayedMethod("ccc")  {
+	if cfg.IsDelayedMethod("ccc")  {
 		t.Error("ccc should not be delayed, but true")
 	}
 
