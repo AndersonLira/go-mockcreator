@@ -28,3 +28,11 @@ func (c *Config) IsCacheEvict(name string) bool{
 	return false;
 }
 
+func (c *Config) IsStaticReturn(name string) (string, bool) {
+	for k, v := range c.StaticReturn {
+		if strings.HasPrefix(name, k){
+			return v,true
+		}
+	}
+	return "",false;
+}

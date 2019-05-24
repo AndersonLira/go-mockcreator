@@ -66,3 +66,30 @@ func TestConfigIsCacheEvict(t *testing.T){
 		t.Error("ccc should not be cached evict, but true")
 	}
 }
+
+func TestStaticReturn(t *testing.T){
+	methods := make(map[string]string)
+	methods["aaa"] = "aaa_static"
+	methods["aaad"] = "aaad_static"
+	methods["ccc"] = "c_static"
+
+	cfg := config.GetConfig()
+	cfg.StaticReturn = methods
+
+	if v,ok := cfg.IsStaticReturn("aaa"); !ok  || v != "aaa_static"  {
+		t.Errorf("aaa should have aaa_static value, but %s",v )
+	}
+
+	if v,ok := cfg.IsStaticReturn("aaad"); !ok  || v != "aaa_static"  {
+		t.Errorf("aaad should have aaa_static value, but %s",v )
+	}
+
+	if v,ok := cfg.IsStaticReturn("cccccc"); !ok  || v != "c_static"  {
+		t.Errorf("cccccc should have c_static value, but %s",v )
+	}
+
+
+	if v,ok := cfg.IsStaticReturn("bbb"); ok  {
+		t.Errorf("bbb should not have static value, but %s",v )
+	}
+}

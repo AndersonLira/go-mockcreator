@@ -23,6 +23,7 @@ type Config struct {
 	WorkAsProxy bool `json:"workingAsProxy"`
 	ClearCache map[string][]string `json:"clearCache"`
 	CacheEvict []string `json:"cacheEvict"`
+	StaticReturn map[string]string `json:"staticReturn"`
 }
 
 func (c Config) GetPort() string {
