@@ -43,3 +43,26 @@ func TestShouldClearCache(t *testing.T){
 		t.Errorf("bbb should not exists, but %v",list )
 	}
 }
+
+func TestConfigIsCacheEvict(t *testing.T){
+	methods := []string{"aaa","bbb","ddd"}
+	cfg := config.GetConfig()
+	cfg.CacheEvict = methods
+
+	if !cfg.IsCacheEvict("aaa")  {
+		t.Error("aaa should be cache evict, but false")
+	}
+
+	if !cfg.IsCacheEvict("bbbc")  {
+		t.Error("bbbc should be cache evict, but false")
+	}
+
+	if cfg.IsCacheEvict("dd")  {
+		t.Error("dd should not be cache evict, but true")
+	}
+
+
+	if cfg.IsCacheEvict("ccc")  {
+		t.Error("ccc should not be cached evict, but true")
+	}
+}

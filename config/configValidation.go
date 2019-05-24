@@ -19,3 +19,12 @@ func (c *Config) ShouldClearCache(name string ) ([]string, bool){
 }
 
 
+func (c *Config) IsCacheEvict(name string) bool{
+	for _, s := range c.CacheEvict {
+		if strings.HasPrefix(name, s){
+			return true
+		}
+	}
+	return false;
+}
+
