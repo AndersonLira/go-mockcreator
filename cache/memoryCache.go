@@ -3,6 +3,7 @@ package cache
 import (
 	"log"
 	"strings"
+	"sync"
 
 	"github.com/andersonlira/go-mockcreator/chain"
 	"github.com/andersonlira/go-mockcreator/config"
@@ -10,7 +11,7 @@ import (
 	"github.com/andersonlira/goutils/ft"
 )
 
-
+var m = sync.Mutex{}
 var memCache = make(map[string] string)
 type MemoryCacheExecutor struct {
 	Next chain.Executor
@@ -26,11 +27,11 @@ func (self MemoryCacheExecutor) Get(xmlS string) (string,error) {
 		return self.GetNext().Get(xmlS)
 	}
 
-	content ,ok  := memCache[fileName]
+	content ,ok  := readMap(fileName)
 	if !ok || content == "" {
 		content, err = self.GetNext().Get(xmlS)
 		if err == nil {
-			memCache[fileName] = content
+			writeMap(fileName, content)
 			manageCache(methodName)
 		}
 	}else{
@@ -55,4 +56,17 @@ func manageCache(methodName string){
 			}
 		}
 	}
+}
+
+func readMap(key string) (string,bool) {
+	m.Lock()
+	defer m.Unlock()
+	r,ok := memCache[key]
+	return r,ok
+}
+
+func writeMap(key, value string){
+	m.Lock()
+	defer m.Unlock()
+	memCache[key] = value
 }
