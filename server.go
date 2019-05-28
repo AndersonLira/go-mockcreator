@@ -15,14 +15,15 @@ import (
 
 )
 
-var memExecutor = cache.MemoryCacheExecutor{}
-var fileExecutor = cache.FileCacheExecutor{}
-var wsdlExecutor = net.WsdlExecutor{}
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
 	reqData, _ := ioutil.ReadAll(r.Body)
 	reqText := string(reqData)
-	memExecutor.Next = &fileExecutor
+	
+	fileExecutor := cache.FileCacheExecutor{}
+	memExecutor := cache.CreateMemoryCacheExecutor(&fileExecutor)
+	wsdlExecutor := net.WsdlExecutor{}
+
 	fileExecutor.Next = &wsdlExecutor
 	var executor  chain.Executor
 	if cfg.WorkAsProxy {
