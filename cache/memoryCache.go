@@ -12,7 +12,6 @@ import (
 	"github.com/andersonlira/goutils/watcher"
 )
 
-var m = sync.Mutex{}
 var memCache = make(map[string] string)
 var listToClear = make(map[string]bool)
 var once  sync.Once
@@ -78,7 +77,7 @@ func manageCache(methodName string){
 			for k := range memCache {
 				if strings.HasPrefix(k, item){
 					log.Printf("%sRemoving memory cache: %s%s",ft.BLUE,k,ft.NONE)
-					delete(memCache,k)
+					deleteFromMap(k)
 				}
 			}
 		}
@@ -91,12 +90,22 @@ func manageListToClear(){
 		for key2 := range memCache {
 			if strings.HasSuffix(fileName,key2){
 				log.Printf("%sRemoving memory cache: %s because file has been changed.%s",ft.BLUE,key2,ft.NONE)
-				delete(listToClear,key)
-				delete(memCache,key2)
+				deleteFromMapChanged(key)
+				deleteFromMap(key2)
 			}
 		}
 	}
 }
+
+var m = sync.Mutex{}
+
+func deleteFromMap(key string){
+	m.Lock()
+	defer m.Unlock()
+	delete(memCache,key)
+}
+
+
 
 func readMap(key string) (string,bool) {
 	m.Lock()
@@ -110,3 +119,28 @@ func writeMap(key, value string){
 	defer m.Unlock()
 	memCache[key] = value
 }
+
+var mChanged = sync.Mutex{}
+
+
+func deleteFromMapChanged(key string){
+	mChanged.Lock()
+	defer mChanged.Unlock()
+	delete(listToClear,key)
+}
+
+
+
+func readMapChanged(key string) (bool,bool) {
+	mChanged.Lock()
+	defer mChanged.Unlock()
+	r,ok := listToClear[key]
+	return r,ok
+}
+
+func writeMapChanged(key string, value bool){
+	mChanged.Lock()
+	defer mChanged.Unlock()
+	listToClear[key] = value
+}
+
