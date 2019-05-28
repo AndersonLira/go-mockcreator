@@ -31,4 +31,4 @@ The file of configurations is explained: Each key changes mock server behaviour.
 - **staticReturn** methods that should have these returns statics. Here is configured the file of return.
 
 To see config alterations is necessary restart application
-**For help, execute jar file without parameters**
+
