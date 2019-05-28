@@ -87,7 +87,6 @@ func manageCache(methodName string){
 
 func manageListToClear(){
 	for fileName, _ := range listToClear {
-		log.Printf("::::::.....%s.....::::::::",fileName)
 		key := strings.Replace(fileName,config.GetConfig().PayloadFolder,"",-1)
 		for key2 := range memCache {
 			if strings.HasSuffix(fileName,key2){
