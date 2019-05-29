@@ -29,7 +29,7 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 	if cfg.WorkAsProxy {
 		executor = &wsdlExecutor
 	}else{
-		executor = &memExecutor
+		executor = memExecutor
 	}
 	content, err := executor.Get(reqText)
 	if err != nil {

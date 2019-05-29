@@ -15,13 +15,13 @@ import (
 var memCache = make(map[string] string)
 var listToClear = make(map[string]bool)
 var once  sync.Once
-//MemoryCacheExecutor implements chain.Executor
-type MemoryCacheExecutor struct {
+
+type memoryCacheExecutor struct {
 	next chain.Executor
 }
 
-func CreateMemoryCacheExecutor(next chain.Executor) (executor MemoryCacheExecutor) {
-	executor = MemoryCacheExecutor{next:next}
+func CreateMemoryCacheExecutor(next chain.Executor) (executor chain.Executor) {
+	executor = &memoryCacheExecutor{next:next}
 	once.Do(func(){
 		wf := watcher.WatcherFile{
 			Paths:[]string{config.GetConfig().PayloadFolder},
@@ -36,7 +36,7 @@ func CreateMemoryCacheExecutor(next chain.Executor) (executor MemoryCacheExecuto
 	return 
 }
 
-func (self MemoryCacheExecutor) Get(xmlS string) (string,error) {
+func (self memoryCacheExecutor) Get(xmlS string) (string,error) {
 	manageListToClear()
 	if self.next == nil {
 		panic("next can not be nil. Use CreateMemoryCacheExecutor to create instance and pass executor reference")
@@ -67,7 +67,7 @@ func (self MemoryCacheExecutor) Get(xmlS string) (string,error) {
 	return content, err
 }
 
-func (self *MemoryCacheExecutor) GetNext() chain.Executor{
+func (self *memoryCacheExecutor) GetNext() chain.Executor{
 	return self.next
 }
 
