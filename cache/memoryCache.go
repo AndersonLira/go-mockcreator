@@ -29,7 +29,7 @@ func CreateMemoryCacheExecutor(next chain.Executor) (executor chain.Executor) {
 		wf.Start()
 		go func(){
 			for {
-				listToClear[<-wf.FileChanged] = true
+				writeMapChanged(<-wf.FileChanged,true)
 			}
 		}()
 	})
@@ -74,7 +74,7 @@ func (self *memoryCacheExecutor) GetNext() chain.Executor{
 func manageCache(methodName string){
 	if list, ok := config.GetConfig().ShouldClearCache(methodName); ok {
 		for _,item := range list {
-			for k := range memCache {
+			for k := range getMap() {
 				if strings.HasPrefix(k, item){
 					log.Printf("%sRemoving memory cache: %s%s",ft.BLUE,k,ft.NONE)
 					deleteFromMap(k)
@@ -85,9 +85,9 @@ func manageCache(methodName string){
 }
 
 func manageListToClear(){
-	for fileName, _ := range listToClear {
+	for fileName, _ := range getMapChanged() {
 		key := strings.Replace(fileName,config.GetConfig().PayloadFolder,"",-1)
-		for key2 := range memCache {
+		for key2 := range getMap() {
 			if strings.HasSuffix(fileName,key2){
 				log.Printf("%sRemoving memory cache: %s because file has been changed.%s",ft.BLUE,key2,ft.NONE)
 				deleteFromMapChanged(key)
@@ -120,6 +120,13 @@ func writeMap(key, value string){
 	memCache[key] = value
 }
 
+func getMap() map[string]string {
+	m.Lock()
+	defer m.Unlock()
+	return memCache
+}
+
+
 var mChanged = sync.Mutex{}
 
 
@@ -142,5 +149,11 @@ func writeMapChanged(key string, value bool){
 	mChanged.Lock()
 	defer mChanged.Unlock()
 	listToClear[key] = value
+}
+
+func getMapChanged() map[string]bool {
+	mChanged.Lock()
+	defer mChanged.Unlock()
+	return listToClear
 }
 
