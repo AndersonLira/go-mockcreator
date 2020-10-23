@@ -26,6 +26,7 @@ type Config struct {
 	StaticReturn map[string]string `json:"staticReturn"`
 	LogRequestBody bool `json:"logRequestBody"`
 	LogResponseBody bool `json:"logResponsebody"`
+	ManipulateData map[string]string `json:"manipulateData"`
 }
 
 func (c Config) GetPort() string {

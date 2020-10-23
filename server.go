@@ -5,6 +5,7 @@ import (
 	"log"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/andersonlira/go-mockcreator/cache"
@@ -49,6 +50,10 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Response Body %s\n\n",methodName)
 		log.Println(content)
 		fmt.Println("")
+	}
+
+	for k,v := range cfg.ManipulateData {
+		content = strings.ReplaceAll(content,k,v)
 	}
 
 	fmt.Fprint(w, content)

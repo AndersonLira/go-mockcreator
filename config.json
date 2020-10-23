@@ -35,6 +35,10 @@
 		"soapMethodNameBodyKey": "payloads/specific_request_response.xml",
 		"soapMethodName": "payloads/generic_request_response.xml"
 	},
+	"manipulateData": {
+		"originalData":"finalData",
+		"originalData2":"finalData2"
+	},
 	"port": 8088,
 	"logRequestBody": true,
 	"logResponseBody": true
