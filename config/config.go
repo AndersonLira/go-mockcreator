@@ -24,6 +24,8 @@ type Config struct {
 	ClearCache map[string][]string `json:"clearCache"`
 	CacheEvict []string `json:"cacheEvict"`
 	StaticReturn map[string]string `json:"staticReturn"`
+	LogRequestBody bool `json:"logRequestBody"`
+	LogResponseBody bool `json:"logResponsebody"`
 }
 
 func (c Config) GetPort() string {

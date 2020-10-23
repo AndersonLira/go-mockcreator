@@ -29,6 +29,8 @@ The file of configurations is explained: Each key changes mock server behaviour.
 - **clearCache** methods that need remove cache after some other method call.
 - **cacheEvict** methods that should not be cached. These requests will be always in origin server.
 - **staticReturn** methods that should have these returns statics. Here is configured the file of return.
+- **logRequestBody** It will print request soaps body.
+- **logResponseBody** It will print response soaps body.
 
 To see config alterations is necessary restart application
 

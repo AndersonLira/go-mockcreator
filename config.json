@@ -35,5 +35,8 @@
 		"soapMethodNameBodyKey": "payloads/specific_request_response.xml",
 		"soapMethodName": "payloads/generic_request_response.xml"
 	},
-	"port": 8088
+	"port": 8088,
+	"logRequestBody": true,
+	"logResponseBody": true
+
 }

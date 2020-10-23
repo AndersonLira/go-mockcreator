@@ -40,6 +40,17 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 		log.Printf("%s Sleeping %d milliseconds for %s request%s",ft.GREEN,cfg.ReturnDelay,methodName,ft.NONE )
 		time.Sleep(time.Duration(cfg.ReturnDelay) * time.Millisecond)
 	}
-    fmt.Fprint(w, content)
+	if cfg.LogRequestBody && err == nil {
+		log.Printf("Request Body %s \n\n",methodName)
+		log.Println(reqText)
+		fmt.Println("")
+	}
+	if cfg.LogResponseBody && err == nil {
+		log.Printf("Response Body %s\n\n",methodName)
+		log.Println(content)
+		fmt.Println("")
+	}
+
+	fmt.Fprint(w, content)
 }
 
