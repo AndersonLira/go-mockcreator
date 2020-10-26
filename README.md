@@ -32,6 +32,10 @@ The file of configurations is explained: Each key changes mock server behaviour.
 - **logRequestBody** It will print request soaps body (default false).
 - **logResponseBody** It will print response soaps body (default false).
 - **maniuplateData** (v1.1)Data that must be changed. A key value list with replaces. 
+- **logRequestBody** (v1.2) If true request body is logged.
+- **logResponseBody** (v1.2) If true response body is logged.
+- **logErrorFile** (v1.3) Log error in file if is a valid path
+- **loopWhenErrorInterval** (v1.4) Starts loop if value greater than 30 (seconds)
 
 To see config alterations is necessary restart application
 

@@ -35,6 +35,10 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 	content, err := executor.Get(reqText)
 	if err != nil {
 		http.Error(w,content, http.StatusInternalServerError)
+		if cfg.LoopWhenErrorInterval > 30 {
+			worker := Worker{executor, reqText, cfg.LoopWhenErrorInterval}
+			worker.Run()
+		}
 	}
 	methodName := xml.ExtractXmlMethodName(reqText)
 	if cfg.ReturnDelay > 0 && cfg.IsDelayedMethod(methodName) {

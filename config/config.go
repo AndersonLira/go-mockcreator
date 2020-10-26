@@ -28,6 +28,7 @@ type Config struct {
 	LogResponseBody bool `json:"logResponsebody"`
 	ManipulateData map[string]string `json:"manipulateData"`
 	LogErrorFile string `json:"logErrorFile"`
+	LoopWhenErrorInterval int32 `json:"loopWhenErrorInterval"`
 }
 
 func (c Config) GetPort() string {

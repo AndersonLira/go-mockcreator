@@ -107,8 +107,8 @@ func persistError(fileName, request, response string) {
 	if fileName == "" {
 		return 
 	}
-	reqFormatted := xmlfmt.FormatXML(request, "\t", "  ")
-	respFormatted := xmlfmt.FormatXML(response, "\t", "  ")
+	reqFormatted := xmlfmt.FormatXML(request, "", "  ")
+	respFormatted := xmlfmt.FormatXML(response, "", "  ")
 	io.AppendFile(fileName,fmt.Sprintf("<!-- %v -->\n",time.Now()))
 	io.AppendFile(fileName,fmt.Sprintf("<!-- SOAP IN -->\n%s\n\n<!-- SOAP OUT -->\n%s\n\n",reqFormatted,respFormatted))
 }

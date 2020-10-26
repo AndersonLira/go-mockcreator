@@ -4,7 +4,7 @@
 			"selectPorfolioItem"
 	],
 	"showErrorServer": true,
-	"workingAsProxy": false,
+	"workingAsProxy": true,
 	"clearCache":{
 		"createDelegation": [
 			"getDelegationGroupsSummary",
@@ -42,6 +42,6 @@
 	"port": 8088,
 	"logRequestBody": true,
 	"logResponseBody": true,
-	"logErrorFile": "d:\\tmp\\mockcreator.err"
-
+	"logErrorFile": "d:\\tmp\\mockcreator.err",
+	"loopWhenErrorInterval": 10
 }
