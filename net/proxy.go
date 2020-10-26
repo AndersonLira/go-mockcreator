@@ -9,11 +9,14 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/andersonlira/go-mockcreator/chain"
 	"github.com/andersonlira/go-mockcreator/config"
 	"github.com/andersonlira/go-mockcreator/xml"
 	"github.com/andersonlira/goutils/ft"
+	"github.com/andersonlira/goutils/io"
+	"github.com/go-xmlfmt/xmlfmt"
 
 )
 
@@ -94,7 +97,18 @@ func wsdl(xmlRequest string) (string,error){
 			log.Println("^SOAP IN ---------v SOAP OUT-------")
 			log.Printf("%s%s%s",ft.MARGENT,responseText,ft.NONE)
 		}
+		persistError(cfg.LogErrorFile,xmlRequest,responseText)
 		return responseText, errors.New(fmt.Sprintf("Server Error status %d",res.StatusCode))
 	}
 	return responseText,nil
+}
+
+func persistError(fileName, request, response string) {
+	if fileName == "" {
+		return 
+	}
+	reqFormatted := xmlfmt.FormatXML(request, "\t", "  ")
+	respFormatted := xmlfmt.FormatXML(response, "\t", "  ")
+	io.AppendFile(fileName,fmt.Sprintf("<!-- %v -->\n",time.Now()))
+	io.AppendFile(fileName,fmt.Sprintf("<!-- SOAP IN -->\n%s\n\n<!-- SOAP OUT -->\n%s\n\n",reqFormatted,respFormatted))
 }

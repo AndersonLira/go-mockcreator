@@ -41,6 +41,7 @@
 	},
 	"port": 8088,
 	"logRequestBody": true,
-	"logResponseBody": true
+	"logResponseBody": true,
+	"logErrorFile": "d:\\tmp\\mockcreator.err"
 
 }

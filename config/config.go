@@ -27,6 +27,7 @@ type Config struct {
 	LogRequestBody bool `json:"logRequestBody"`
 	LogResponseBody bool `json:"logResponsebody"`
 	ManipulateData map[string]string `json:"manipulateData"`
+	LogErrorFile string `json:"logErrorFile"`
 }
 
 func (c Config) GetPort() string {
