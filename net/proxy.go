@@ -62,7 +62,7 @@ func wsdl(xmlRequest string) (string,error){
 	// prepare the request
 	req, err := http.NewRequest(httpMethod, url, bytes.NewReader(payload))
 	if err != nil {
-		log.Fatal("Error on creating request object. ", err.Error())
+		log.Println("%sError on creating request object. %v \n %s ",ft.RED ,err.Error(),ft.NONE)
 		return "", err
 	}
 
@@ -84,7 +84,7 @@ func wsdl(xmlRequest string) (string,error){
 	// dispatch the request
 	res, err := client.Do(req)
 	if err != nil {
-		log.Fatal("Error on dispatching request. ", err.Error())
+		log.Printf("%sError on dispatching request. %v \n %s",ft.RED,  err.Error(), ft.NONE)
 		return "",err
 	}
 
