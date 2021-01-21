@@ -37,7 +37,7 @@ func (self FileCacheExecutor) Get(xmlS string) (string,error) {
 
 
 	content ,err  := io.ReadFile(pathName)
-	if err != nil || content == "" {
+	if err != nil || content == "" || config.GetConfig().WorkAsProxy {
 		content, err = self.GetNext().Get(xmlS)
 		if err == nil {
 			writeNewContent(pathName,content)

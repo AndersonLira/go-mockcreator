@@ -39,3 +39,7 @@ The file of configurations is explained: Each key changes mock server behaviour.
 
 To see config alterations is necessary restart application
 
+
+## Release Note
+
+- **1.5** Now when working as proxy, files will be updated

@@ -54,7 +54,7 @@ func (self memoryCacheExecutor) Get(xmlS string) (string,error) {
 	
 
 	content ,ok  := readMap(fileName)
-	if !ok || content == "" {
+	if !ok || content == "" || config.GetConfig().WorkAsProxy {
 		content, err = self.GetNext().Get(xmlS)
 		if err == nil {
 			writeMap(fileName, content)
