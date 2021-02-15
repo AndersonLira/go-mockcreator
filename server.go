@@ -12,6 +12,7 @@ import (
 	"github.com/andersonlira/go-mockcreator/net"
 	"github.com/andersonlira/go-mockcreator/xml"
 	"github.com/andersonlira/goutils/ft"
+	"github.com/andersonlira/goutils/io"
 
 )
 
@@ -43,12 +44,25 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Request Body %s \n\n",methodName)
 		log.Println(reqText)
 		fmt.Println("")
+
 	}
 	if cfg.LogResponseBody && err == nil {
 		log.Printf("Response Body %s\n\n",methodName)
 		log.Println(content)
 		fmt.Println("")
 	}
+	
+	if cfg.LogFile != "" && err == nil{
+		separator := "<!-- *********************%s %s******************************* -->"
+		io.AppendFile(cfg.LogFile,fmt.Sprintf(separator,"Begin",methodName)+"\n")
+		io.AppendFile(cfg.LogFile,"<!-- SOAP IN -->\n");
+		io.AppendFile(cfg.LogFile,reqText + "\n")
+		io.AppendFile(cfg.LogFile,"<!-- SOAP OUT -->\n");
+		io.AppendFile(cfg.LogFile,content + "\n")
+		io.AppendFile(cfg.LogFile,fmt.Sprintf(separator,"End", methodName)+"\n")
+
+	}
+
 
 	for k,v := range cfg.ManipulateData {
 		content = strings.ReplaceAll(content,k,v)

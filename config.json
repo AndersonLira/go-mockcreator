@@ -43,5 +43,6 @@
 	"logRequestBody": true,
 	"logResponseBody": true,
 	"logErrorFile": "d:\\tmp\\mockcreator.err",
-	"loopWhenErrorInterval": 10
+	"loopWhenErrorInterval": 120,
+	"logFile": "d:\\tmp\\services.xml"
 }

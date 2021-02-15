@@ -34,8 +34,9 @@ The file of configurations is explained: Each key changes mock server behaviour.
 - **maniuplateData** (v1.1)Data that must be changed. A key value list with replaces. 
 - **logRequestBody** (v1.2) If true request body is logged.
 - **logResponseBody** (v1.2) If true response body is logged.
-- **logErrorFile** (v1.3) Log error in file if is a valid path
-- **loopWhenErrorInterval** (v1.4) Starts loop if value greater than 30 (seconds)
+- **logErrorFile** (v1.3) Log error in file if is a valid path.
+- **loopWhenErrorInterval** (v1.4) Starts loop if value greater than 30 (seconds).
+- **logFile** (v1.6) If is a valid path, then success soaps in and soaps outs will be written.
 
 To see config alterations is necessary restart application
 
@@ -43,3 +44,4 @@ To see config alterations is necessary restart application
 ## Release Note
 
 - **1.5** Now when working as proxy, files will be updated
+- **1.6** Write logs for flow analisys
